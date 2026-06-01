@@ -1,0 +1,69 @@
+{
+  "date": "2026-06-01",
+  "generated": "2026-06-01T13:46:46Z",
+  "demo": true,
+  "verification_note": "Produced from live WebSearch discovery in the Claude Code sandbox. Article bodies were NOT fetchable here (egress allowlist + WebFetch 403), so word counts, paywall status, and authors are UNVERIFIED and trigger scores are provisional from search snippets. No PDFs rendered. The first GitHub Actions run will verify, filter, and render PDFs.",
+  "articles": [
+    {
+      "id": "minds-blank-moments-consciousness",
+      "title": "What your mind's blank moments reveal about consciousness",
+      "url": "https://psyche.co/ideas/what-your-minds-blank-moments-reveal-about-consciousness",
+      "author": null,
+      "source": "Psyche",
+      "source_id": null,
+      "domains": ["neuroscience", "philosophy"],
+      "triggers": { "bold_thesis": 3, "reframed_idea": 4, "contrarian_data": 3, "deep_why": 4 },
+      "top_trigger": "reframed_idea",
+      "surprise": false,
+      "hook": "Reframes 'mind-blanking' from a glitch into a distinct mental state that undercuts the 'consciousness is a continuous stream' assumption in philosophy of mind.",
+      "subscribed": false,
+      "selected": true,
+      "pdf": null,
+      "verified": false
+    },
+    {
+      "id": "designing-ai-for-disruptive-science",
+      "title": "Designing AI for Disruptive Science",
+      "url": "https://www.asimov.press/p/ai-science",
+      "author": null,
+      "source": "Asimov Press",
+      "source_id": null,
+      "domains": ["physics-systems", "cross-domain"],
+      "triggers": { "bold_thesis": 4, "reframed_idea": 3, "contrarian_data": 2, "deep_why": 4 },
+      "top_trigger": "bold_thesis",
+      "surprise": true,
+      "hook": "A systems-level argument about what produces disruptive (not incremental) science, and how to design AI tools to widen rather than narrow the search space.",
+      "subscribed": false,
+      "selected": true,
+      "pdf": null,
+      "verified": false
+    },
+    {
+      "id": "does-science-fiction-shape-the-future",
+      "title": "Does Science Fiction Shape the Future?",
+      "url": "https://nautil.us/does-science-fiction-shape-the-future-543468",
+      "author": null,
+      "source": "Nautilus",
+      "source_id": null,
+      "domains": ["storytelling", "culture-sociology"],
+      "triggers": { "bold_thesis": 3, "reframed_idea": 4, "contrarian_data": 2, "deep_why": 3 },
+      "top_trigger": "reframed_idea",
+      "surprise": false,
+      "hook": "Argues science fiction doesn't just predict the future but engineers it by shaping the imaginations of the people who build it - narrative as causal force.",
+      "subscribed": false,
+      "selected": true,
+      "pdf": null,
+      "verified": false,
+      "caveat": "Nautilus runs a metered paywall; CI must confirm free access before keeping."
+    }
+  ],
+  "held": [
+    {
+      "title": "A century of schemes for automating authorship",
+      "author": "Jill Lepore",
+      "source": "The New Yorker",
+      "url": "https://www.newyorker.com/",
+      "reason": "Paywalled and not on the subscription list -> excluded per hard filter."
+    }
+  ]
+}
