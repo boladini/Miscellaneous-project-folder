@@ -1,0 +1,91 @@
+name: Curiosity Pipeline
+
+# Runs "inside Claude Code" unattended via the Claude Code GitHub Action.
+# Scheduled triggers and the manual "Run workflow" button only activate once this file
+# is on the repository's DEFAULT branch (merge the PR first).
+
+on:
+  schedule:
+    # 11:00 UTC, Monday–Friday (~07:00 America/New_York during EDT). Adjust to taste.
+    - cron: "0 11 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      count:
+        description: "Target number of articles (3–5)"
+        required: false
+        default: "4"
+
+# Allow the job to commit the digest back to the repo.
+permissions:
+  contents: write
+
+concurrency:
+  group: curiosity-pipeline
+  cancel-in-progress: false
+
+jobs:
+  curate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install DejaVu fonts and Python deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-dejavu-core fonts-dejavu-extra
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+
+      - name: Smoke test the plumbing
+        run: python scripts/tests/test_smoke.py
+
+      - name: Pre-fetch RSS candidates (best effort)
+        run: python scripts/fetch_feeds.py --days 4 --out work/candidates.json || true
+
+      - name: Run the Curiosity Pipeline (Claude Code)
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            You are running UNATTENDED in CI. Execute the Curiosity Pipeline exactly as
+            specified in pipeline/PLAYBOOK.md for today's date (date -u +%F).
+            Target ${{ github.event.inputs.count || '4' }} articles (acceptable range 3–5;
+            deliver fewer rather than padding with weak picks).
+
+            Pre-fetched RSS candidates are at work/candidates.json. Spend real effort on
+            Step 2(b) discovery (WebSearch) so the digest includes strong pieces from
+            BEYOND the subscribed sources in sources.json.
+
+            Write all deliverables into the repository:
+              - digests/<YYYY-MM-DD>/index.md      (the human-facing digest)
+              - digests/<YYYY-MM-DD>/<slug>.pdf     (one readable full-text PDF per pick)
+              - digests/<YYYY-MM-DD>/scores.json    (structured scoring log)
+              - update pipeline/sources.json weights if feedback/inbox.md had pending signals
+
+            Do NOT run git and do NOT open a pull request — a later workflow step commits
+            and pushes your file changes.
+          claude_args: |
+            --model sonnet
+            --max-turns 80
+            --allowedTools "Bash,Read,Write,Edit,Glob,Grep,WebSearch,WebFetch"
+
+      - name: Commit and push the digest
+        run: |
+          git config user.name "curiosity-pipeline[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit (no picks cleared the bar today)."
+          else
+            git commit -m "Curiosity digest $(date -u +%F)"
+            git push
+          fi

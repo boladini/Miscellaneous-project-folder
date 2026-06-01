@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "weights_explained": "Append-only log of processed feedback signals. scripts/apply_feedback.py reads feedback/inbox.md, adjusts the matching source 'weight' in sources.json (STAR +0.2, MORE +0.3, SKIP -0.2; clamped to [0.1, 3.0]), and records each processed signal here with a timestamp.",
+  "processed": []
+}
