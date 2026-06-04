@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Atom Fixture</title>
+  <link href="https://atom.example.com"/>
+  <entry>
+    <title>A Field Guide to Feedback Loops</title>
+    <link rel="alternate" type="text/html" href="https://atom.example.com/feedback-loops"/>
+    <published>2026-05-26T08:00:00Z</published>
+    <author><name>B. Atom Writer</name></author>
+    <summary>Where attractors and tipping points come from.</summary>
+  </entry>
+</feed>

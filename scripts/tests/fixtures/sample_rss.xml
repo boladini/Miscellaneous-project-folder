@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Fixture Review</title>
+    <link>https://example.com</link>
+    <item>
+      <title>The Ladder of Emergence</title>
+      <link>https://example.com/ladder-of-emergence</link>
+      <pubDate>Thu, 28 May 2026 09:00:00 GMT</pubDate>
+      <dc:creator>A. Sample Author</dc:creator>
+      <description>&lt;p&gt;Reductionism is incomplete &amp;mdash; and the gap is where the interesting things live.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>On Downward Causation</title>
+      <link>https://example.com/downward-causation?utm_source=rss</link>
+      <pubDate>Wed, 27 May 2026 09:00:00 GMT</pubDate>
+      <dc:creator>A. Sample Author</dc:creator>
+      <description>Can a pattern constrain its own substrate?</description>
+    </item>
+  </channel>
+</rss>

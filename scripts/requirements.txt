@@ -1,0 +1,6 @@
+# Curiosity Pipeline plumbing dependencies (Python 3.11+).
+# Intentionally minimal and wheel-only so it installs cleanly in CI.
+# RSS/Atom parsing uses the standard library (no feedparser).
+requests>=2.31
+trafilatura>=2.0      # readability-style full-text extraction
+fpdf2>=2.8            # Unicode PDF rendering (needs DejaVu fonts on the system)
