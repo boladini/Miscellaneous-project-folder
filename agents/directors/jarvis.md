@@ -132,15 +132,30 @@ Fury / me with what's wrong.
 - **Gmail + Google Calendar** — owner/vendor email drafts, scheduling context.
 - Read access to Gamma / Wix / QuickBooks for reporting context (rarely needed).
 
-**Required to fully activate (NOT yet connected in this environment):**
-- **WhatsApp** — needed for VA group-chat monitoring (§2.2). *Action item:* connect
-  a WhatsApp integration (e.g. Business API / a WhatsApp MCP). Until then, this
-  function is dormant and clearly labeled as such.
-- **PMS API** — needed for guest-message monitoring (§2.3). *Action item:* provide
-  PMS name + API credentials so an integration can be wired. Common STR PMSs:
-  Hostaway, Guesty, Hospitable, Lodgify, OwnerRez.
+**Our stack — needs wiring (NOT yet connected as tools in this environment):**
 
-Until WhatsApp/PMS are connected, Jarvis runs at partial capacity on the
+- **Hostaway (PMS)** — account ID **130996**. Needed for guest-message
+  monitoring (§2.3) and reservation/turnover context.
+  - API: base `https://api.hostaway.com/v1`, OAuth2 client-credentials
+    (account ID + API key → bearer token). Key endpoints: `GET /reservations`,
+    `GET /conversations`, `GET /conversations/{id}/messages`.
+  - *Action item:* provide a Hostaway API key (client secret) for account
+    130996 via secrets/env — **do not paste it into chat.** Then connect a
+    Hostaway MCP or wire direct API calls.
+
+- **Twilio WhatsApp** — needed for VA message intake (§2.2).
+  - Auth: Twilio Account SID + Auth Token. Inbound messages arrive via webhook;
+    history via `GET /2010-04-01/Accounts/{SID}/Messages.json`.
+  - ⚠️ **Constraint — read this:** Twilio uses the WhatsApp Business Platform,
+    which is **1:1 only and cannot read existing WhatsApp group chats.** The VA
+    group-chat watch in §2.2 is **not possible as literally described.**
+    **Workaround we'll use:** a dedicated Twilio WhatsApp ops number that VAs
+    message to report issues/updates; Jarvis reads that stream instead of the
+    group. Until that number + routing exist, §2.2 is dormant.
+  - *Action item:* provide Twilio SID + Auth Token via secrets/env (not chat),
+    and decide on the ops-number workflow.
+
+Until Hostaway + Twilio are connected, Jarvis runs at partial capacity on the
 Monday/ClickUp/Gmail surface and explicitly notes the blind spots in each digest.
 
 ---

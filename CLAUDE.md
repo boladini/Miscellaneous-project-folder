@@ -38,12 +38,13 @@ harness how to run them.
 | Task execution (secondary) | **ClickUp** | Connected | Jarvis |
 | Email + scheduling | **Gmail + Google Calendar** | Connected | Jarvis, Nick Fury |
 | Reporting context | Gamma / Wix / QuickBooks | Connected | as needed |
-| VA group-chat monitoring | **WhatsApp** | **Not connected — action item** | Jarvis |
-| Guest-message monitoring | **PMS API** (Hostaway/Guesty/Hospitable/etc.) | **Not connected — action item** | Jarvis |
+| VA message intake | **Twilio WhatsApp** (ops number) | **Not connected — action item** | Jarvis |
+| Guest-message + reservation monitoring | **Hostaway PMS** (account 130996) | **Not connected — action item** | Jarvis |
 
-> Until WhatsApp + PMS are connected, Jarvis runs at partial capacity and notes
+> Until Twilio + Hostaway are connected, Jarvis runs at partial capacity and notes
 > the blind spots in every digest. See `agents/directors/jarvis.md` §8 for the
-> activation steps.
+> activation steps, credentials needed (via secrets/env, **never chat**), and the
+> Twilio group-chat constraint + ops-number workaround.
 
 ## Continuous monitoring (`/loop`)
 
