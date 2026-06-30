@@ -1,0 +1,5 @@
+# Local MCP config containing real credentials — never commit
+.mcp.json
+
+# Evernote MCP OAuth token saved by mcp-evernote-auth
+.evernote-token.json
