@@ -3,3 +3,6 @@
 
 # Evernote MCP OAuth token saved by mcp-evernote-auth
 .evernote-token.json
+
+# Python bytecode cache
+__pycache__/
