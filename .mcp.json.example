@@ -1,0 +1,15 @@
+{
+  "//": "Template for connecting Claude Code to Evernote. Copy to .mcp.json (git-ignored) and fill in credentials. See docs/evernote-mcp-setup.md. Use EITHER the OAuth keys OR the cookie token below — not both.",
+  "mcpServers": {
+    "evernote": {
+      "command": "npx",
+      "args": ["-y", "-p", "@verygoodplugins/mcp-evernote", "-c", "mcp-evernote"],
+      "env": {
+        "EVERNOTE_CONSUMER_KEY": "your-consumer-key",
+        "EVERNOTE_CONSUMER_SECRET": "your-consumer-secret",
+        "EVERNOTE_ACCESS_TOKEN": "your-access-token-or-clipper-sso-cookie",
+        "EVERNOTE_ENVIRONMENT": "production"
+      }
+    }
+  }
+}
