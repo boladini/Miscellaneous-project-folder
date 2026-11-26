@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --surface-1: #ffffff;
+  --text-secondary: #475569;
+  --grid: #e2e8f0;
+  --axis: #64748b;
+  --series-1: #257de0;
+  --series-2: #f47230;
+  --series-3: #00b894;
+  --series-4: #f2a600;
+  --series-5: #ee7fac;
+  --series-8: #ec4647;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --surface-1: #0f172a;
+    --text-secondary: #94a3b8;
+    --grid: #1e293b;
+    --axis: #94a3b8;
+    --series-1: #338ced;
+    --series-2: #e76624;
+    --series-3: #00a888;
+    --series-4: #d28e05;
+    --series-5: #e24d8b;
+    --series-8: #eb6263;
+  }
+}
+html, body { margin: 0; }
+body { -webkit-font-smoothing: antialiased; }
+.recharts-wrapper:focus, .recharts-surface:focus { outline: none; }
+.recharts-legend-item-text { color: var(--text-secondary) !important; }

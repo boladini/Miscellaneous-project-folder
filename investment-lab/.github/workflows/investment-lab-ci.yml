@@ -1,0 +1,43 @@
+name: investment-lab-ci
+on:
+  push:
+    paths: ["investment-lab/**", ".github/workflows/investment-lab-ci.yml"]
+  pull_request:
+    paths: ["investment-lab/**", ".github/workflows/investment-lab-ci.yml"]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: investment-lab } }
+    services:
+      postgres:
+        image: postgres:16.4
+        env: { POSTGRES_USER: lab, POSTGRES_PASSWORD: lab, POSTGRES_DB: lab_test }
+        ports: ["5432:5432"]
+        options: --health-cmd "pg_isready -U lab" --health-interval 5s --health-retries 20
+    env:
+      TEST_DATABASE_URL: postgresql+psycopg://lab:lab@localhost:5432/lab_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - name: Backend deps
+        run: pip install -r backend/requirements-dev.txt
+      - name: Lint
+        run: cd backend && ruff check lab tests --select F,E9
+      - name: Migrations apply cleanly
+        run: cd backend && export DATABASE_URL=$TEST_DATABASE_URL && alembic upgrade head && alembic downgrade base && alembic upgrade head && alembic downgrade base
+      - name: Tests (deterministic fixtures, no external network)
+        run: cd backend && python -m pytest -q --junitxml=../test-report.xml
+      - name: Frontend typecheck + build
+        run: cd frontend && npm ci && npm run build
+      - name: No secrets in client bundle
+        run: ./scripts/check_bundle_secrets.sh backend/static
+      - name: Dependency audit
+        run: |
+          pip install pip-audit==2.7.3 && pip-audit -r backend/requirements.txt || echo "::warning::pip-audit reported issues"
+          cd frontend && npm audit --omit=dev --audit-level=high || echo "::warning::npm audit reported issues"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: test-report, path: investment-lab/test-report.xml }
