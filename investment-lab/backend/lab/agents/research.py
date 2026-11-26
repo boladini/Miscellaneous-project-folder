@@ -421,7 +421,7 @@ def run_research(s: Session, user_id: str, job_id: str | None = None, now: datet
                 continue
             spec = StrategySpec.model_validate(TEMPLATES[topic])
             card = {"thesis": spec.hypothesis, **{k: v for k, v in CARD_TEXT[topic].items()}}
-            card["counterargument"] = next((e["claim"] for e in evs if e["stance"] == "disconfirming" and e["claim_supported"]),
+            card["counterargument"] = next((f"{e['title']}: “{e['excerpt']}”" for e in evs if e["stance"] == "disconfirming" and e["claim_supported"]),
                                            "No disconfirming evidence retrieved this run — absence of evidence is not support.")
             candidates.append((topic, spec, card, "template"))
 

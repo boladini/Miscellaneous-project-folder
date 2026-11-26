@@ -7,7 +7,6 @@ from decimal import Decimal
 import pytest
 from sqlalchemy import func, select
 
-from lab import market_calendar as cal
 from lab.agents.research import compile_candidate, run_research
 from lab.backtest import Dataset, InstrumentData, full_evaluation, max_drawdown, run_backtest, segment_metrics
 from lab.indicators import Bar
